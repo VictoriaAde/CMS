@@ -1,0 +1,36 @@
+.contact-list {
+  width: 50%;
+  margin-top: 20px;
+}
+
+.contact-item {
+  list-style: none;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.contact-details {
+  flex: 1;
+}
+.contact-details h6 {
+  font-weight: bold;
+  margin-bottom: 0.4rem;
+}
+.contact-actions {
+  display: flex;
+}
+
+.edit-button,
+.delete-button {
+  margin-left: 10px;
+  cursor: pointer;
+  background-color: #ffd700;
+  color: #000;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+}

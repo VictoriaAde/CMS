@@ -10,8 +10,11 @@ const App: React.FC = () => {
     setContacts([...contacts, contact]);
   };
 
-  const editContact = (id: number) => {
-    console.log("Edit contact with id:", id);
+  const editContact = (id: number, updatedContact: Contact) => {
+    const updatedContacts = contacts.map((contact) =>
+      contact.id === id ? updatedContact : contact
+    );
+    setContacts(updatedContacts);
   };
 
   const deleteContact = (id: number) => {

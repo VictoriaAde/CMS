@@ -13,7 +13,8 @@ export const ContactForm: React.FC<ContactFormProps> = ({ addContact }) => {
 
   const isFormValid = name.trim() !== "" && email.trim() !== "";
 
-  const handleAddContact = () => {
+  const handleAddContact = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     // Validate inputs using regular expressions
     if (isFormValid) {
       const id = new Date().getTime();
@@ -46,7 +47,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ addContact }) => {
       {isModalOpen && (
         <div className="modal">
           <div className="modal-content">
-            <form action="">
+            <form onSubmit={handleAddContact} action="">
               <span className="close" onClick={() => setIsModalOpen(false)}>
                 &times;
               </span>
@@ -71,9 +72,7 @@ export const ContactForm: React.FC<ContactFormProps> = ({ addContact }) => {
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
               />
-              <button onClick={handleAddContact} disabled={!isFormValid}>
-                Add Contact
-              </button>
+              <button disabled={!isFormValid}>Add Contact</button>
             </form>
           </div>
         </div>
