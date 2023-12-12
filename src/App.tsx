@@ -1,11 +1,18 @@
-import "./App.css";
+import React, { useState } from "react";
+import { ContactForm } from "./components/ContactForm";
 
-function App() {
+const App: React.FC = () => {
+  const [contacts, setContacts] = useState<Contact[]>([]);
+
+  const addContact = (contact: Contact) => {
+    setContacts([...contacts, contact]);
+  };
+
   return (
-    <>
-      <h1>Welcome</h1>
-    </>
+    <div>
+      <ContactForm addContact={addContact} />
+    </div>
   );
-}
+};
 
 export default App;
