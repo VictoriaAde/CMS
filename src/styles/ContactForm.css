@@ -42,6 +42,10 @@ form {
   display: grid;
   gap: 10px;
 }
+form p {
+  color: rgb(170, 37, 59);
+  font-size: 0.8rem;
+}
 
 label {
   font-weight: bold;

@@ -11,12 +11,46 @@ export const ContactForm: React.FC<ContactFormProps> = ({ addContact }) => {
   const [phone, setPhone] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const isFormValid = name.trim() !== "" && email.trim() !== "";
+  const [nameError, setNameError] = useState<string>("");
+  const [emailError, setEmailError] = useState<string>("");
+  const [phoneError, setPhoneError] = useState<string>("");
+
+  const validateForm = () => {
+    let isValid = true;
+
+    const nameRegex = /^[A-Za-z\s]+$/;
+    if (!nameRegex.test(name.trim())) {
+      setNameError(
+        "Name is required and should only contain letters and spaces."
+      );
+      isValid = false;
+    } else {
+      setNameError("");
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email.trim())) {
+      setEmailError("Email is required and should be a valid email address.");
+      isValid = false;
+    } else {
+      setEmailError("");
+    }
+
+    const phoneRegex = /^[0-9]+$/;
+    if (!phoneRegex.test(phone.trim())) {
+      setPhoneError("Phone is required and should only contain numbers.");
+      isValid = false;
+    } else {
+      setPhoneError("");
+    }
+
+    return isValid;
+  };
 
   const handleAddContact = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Validate inputs using regular expressions
-    if (isFormValid) {
+
+    if (validateForm()) {
       const id = new Date().getTime();
 
       const newContact: Contact = {
@@ -33,8 +67,6 @@ export const ContactForm: React.FC<ContactFormProps> = ({ addContact }) => {
       setPhone("");
 
       setIsModalOpen(false);
-    } else {
-      console.log("Name and Email are required fields.");
     }
   };
 
@@ -52,27 +84,35 @@ export const ContactForm: React.FC<ContactFormProps> = ({ addContact }) => {
                 &times;
               </span>
               <h2>Add New Contact</h2>
-              <label>Name:</label>
+
+              <label htmlFor="name">Name:</label>
+              {nameError && <p>{nameError}</p>}
               <input
                 type="text"
+                name="name"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
               />
-              <label>Email:</label>
+              <label htmlFor="email">Email:</label>
+              {emailError && <p>{emailError}</p>}
               <input
-                type="text"
+                type="email"
+                name="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
-              <label>Phone:</label>
+              <label htmlFor="phone">Phone:</label>
+              {phoneError && <p>{phoneError}</p>}
               <input
-                type="text"
+                type="number"
+                name="phone"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
+                required
               />
-              <button disabled={!isFormValid}>Add Contact</button>
+              <button disabled={!name || !email || !phone}>Add Contact</button>
             </form>
           </div>
         </div>
