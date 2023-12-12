@@ -11,25 +11,30 @@ export const ContactForm: React.FC<ContactFormProps> = ({ addContact }) => {
   const [phone, setPhone] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const isFormValid = name.trim() !== "" && email.trim() !== "";
+
   const handleAddContact = () => {
     // Validate inputs using regular expressions
+    if (isFormValid) {
+      const id = new Date().getTime();
 
-    const id = new Date().getTime();
+      const newContact: Contact = {
+        id,
+        name,
+        email,
+        phone,
+      };
 
-    const newContact: Contact = {
-      id,
-      name,
-      email,
-      phone,
-    };
+      addContact(newContact);
 
-    addContact(newContact);
+      setName("");
+      setEmail("");
+      setPhone("");
 
-    setName("");
-    setEmail("");
-    setPhone("");
-
-    setIsModalOpen(false);
+      setIsModalOpen(false);
+    } else {
+      console.log("Name and Email are required fields.");
+    }
   };
 
   return (
@@ -51,12 +56,14 @@ export const ContactForm: React.FC<ContactFormProps> = ({ addContact }) => {
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                required
               />
               <label>Email:</label>
               <input
                 type="text"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
               />
               <label>Phone:</label>
               <input
@@ -64,7 +71,9 @@ export const ContactForm: React.FC<ContactFormProps> = ({ addContact }) => {
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
               />
-              <button onClick={handleAddContact}>Add Contact</button>
+              <button onClick={handleAddContact} disabled={!isFormValid}>
+                Add Contact
+              </button>
             </form>
           </div>
         </div>

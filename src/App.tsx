@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { ContactForm } from "./components/ContactForm";
+import { ContactList } from "./components/ContactList";
+import "./styles/App.css";
 
 const App: React.FC = () => {
   const [contacts, setContacts] = useState<Contact[]>([]);
@@ -8,10 +10,24 @@ const App: React.FC = () => {
     setContacts([...contacts, contact]);
   };
 
+  const editContact = (id: number) => {
+    console.log("Edit contact with id:", id);
+  };
+
+  const deleteContact = (id: number) => {
+    const updatedContacts = contacts.filter((contact) => contact.id !== id);
+    setContacts(updatedContacts);
+  };
+
   return (
-    <div>
+    <main>
       <ContactForm addContact={addContact} />
-    </div>
+      <ContactList
+        contacts={contacts}
+        editContact={editContact}
+        deleteContact={deleteContact}
+      />
+    </main>
   );
 };
 
